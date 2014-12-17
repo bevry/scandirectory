@@ -1,5 +1,9 @@
 # History
 
+## v2.5.0 December 12, 2014
+- Extracted from [balupton/bal-util](https://github.com/balupton/bal-util)
+- Changed accepted arguments
+
 ## v2.4.3 December 12, 2014
 - Fixed flow (regression since v2.4.2)
 
