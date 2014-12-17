@@ -1,9 +1,8 @@
 {
-  "title": "[Benjamin Lupton's](http://balupton.com) Utility Functions",
-  "name": "bal-util",
-  "version": "2.4.3",
-  "description": "Common utility functions for Node.js used and maintained by Benjamin Lupton",
-  "homepage": "https://github.com/balupton/bal-util",
+  "name": "scandirectory",
+  "version": "2.5.0",
+  "description": "Scan a directory recursively with a lot of control and power",
+  "homepage": "https://github.com/bevry/scandirectory",
   "license": {
     "type": "MIT"
   },
@@ -13,61 +12,41 @@
     "npmdownloads": true,
     "david": true,
     "daviddev": true,
-    "gratipay": "balupton",
+    "gratipay": "bevry",
     "flattr": "344188/balupton-on-Flattr",
     "paypal": "QB8GQPZAH84N6",
     "bitcoin": "https://coinbase.com/checkouts/9ef59f5479eec1d97d63382c9ebcb93a",
     "wishlist": "http://amzn.com/w/2F8TXKSNAFG4V"
   },
   "keywords": [
-    "javascript",
-    "flow",
-    "control",
-    "async",
-    "sync",
-    "tasks",
-    "batch",
-    "utility",
-    "util",
-    "utilities",
-    "paths",
     "path",
-    "events",
-    "event",
-    "module",
-    "modules",
-    "compare",
-    "comparison",
-    "html"
+    "fs",
+    "scandir",
+    "scandirectory",
+    "scantree",
+    "scanlist",
+    "recursive",
+    "tree"
   ],
-  "author": "2011+ Benjamin Lupton <b@lupton.cc> (http://balupton.com)",
+  "author": "2011+ Benjamin Lupton <b@lupton.cc> (http://balupton.com), 2014+ Bevry Pty Ltd <us@bevry.me> (http://bevry.me)",
   "maintainers": [
     "Benjamin Lupton <b@lupton.cc> (https://github.com/balupton)"
   ],
-  "contributors": [
-    "Benjamin Lupton <b@lupton.cc> (https://github.com/balupton)",
-    "Sean Fridman <fridman@mail.sfsu.edu> (https://github.com/sfrdmn)"
-  ],
+  "contributors": [],
   "bugs": {
-    "url": "https://github.com/balupton/bal-util/issues"
+    "url": "https://github.com/bevry/scandirectory/issues"
   },
   "repository": {
     "type": "git",
-    "url": "http://github.com/balupton/bal-util.git"
+    "url": "http://github.com/bevry/scandirectory.git"
   },
   "engines": {
     "node": ">=0.4"
   },
-  "browsers": true,
   "dependencies": {
-    "ambi": "~2.2.0",
-    "eachr": "^2.0.2",
-    "extendr": "^2.1.0",
+    "ignorefs": "^1.0.0",
     "safefs": "^3.1.2",
-    "taskgroup": "^4.0.5",
-    "typechecker": "^2.0.8",
-    "extract-opts": "^2.2.0",
-    "ignorefs": "^1.0.0"
+    "taskgroup": "^4.0.5"
   },
   "devDependencies": {
     "coffee-script": "~1.8.0",
@@ -80,9 +59,9 @@
     "lib": "./out/lib"
   },
   "scripts": {
-    "test": "node ./out/test/everything-test.js"
+    "test": "node ./out/test/scandirectory-test.js"
   },
-  "main": "./out/lib/balutil",
+  "main": "./out/lib/scandirectory",
   "cakeConfiguration": {
     "COFFEE_SRC_PATH": "src"
   }

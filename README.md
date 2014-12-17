@@ -1,19 +1,19 @@
 
 <!-- TITLE/ -->
 
-# [Benjamin Lupton's](http://balupton.com) Utility Functions
+# scandirectory
 
 <!-- /TITLE -->
 
 
 <!-- BADGES/ -->
 
-[![Build Status](https://img.shields.io/travis/balupton/bal-util/master.svg)](http://travis-ci.org/balupton/bal-util "Check this project's build status on TravisCI")
-[![NPM version](https://img.shields.io/npm/v/bal-util.svg)](https://npmjs.org/package/bal-util "View this project on NPM")
-[![NPM downloads](https://img.shields.io/npm/dm/bal-util.svg)](https://npmjs.org/package/bal-util "View this project on NPM")
-[![Dependency Status](https://img.shields.io/david/balupton/bal-util.svg)](https://david-dm.org/balupton/bal-util)
-[![Dev Dependency Status](https://img.shields.io/david/dev/balupton/bal-util.svg)](https://david-dm.org/balupton/bal-util#info=devDependencies)<br/>
-[![Gratipay donate button](https://img.shields.io/gratipay/balupton.svg)](https://www.gratipay.com/balupton/ "Donate weekly to this project using Gratipay")
+[![Build Status](https://img.shields.io/travis/bevry/scandirectory/master.svg)](http://travis-ci.org/bevry/scandirectory "Check this project's build status on TravisCI")
+[![NPM version](https://img.shields.io/npm/v/scandirectory.svg)](https://npmjs.org/package/scandirectory "View this project on NPM")
+[![NPM downloads](https://img.shields.io/npm/dm/scandirectory.svg)](https://npmjs.org/package/scandirectory "View this project on NPM")
+[![Dependency Status](https://img.shields.io/david/bevry/scandirectory.svg)](https://david-dm.org/bevry/scandirectory)
+[![Dev Dependency Status](https://img.shields.io/david/dev/bevry/scandirectory.svg)](https://david-dm.org/bevry/scandirectory#info=devDependencies)<br/>
+[![Gratipay donate button](https://img.shields.io/gratipay/bevry.svg)](https://www.gratipay.com/bevry/ "Donate weekly to this project using Gratipay")
 [![Flattr donate button](https://img.shields.io/badge/flattr-donate-yellow.svg)](http://flattr.com/thing/344188/balupton-on-Flattr "Donate monthly to this project using Flattr")
 [![PayPayl donate button](https://img.shields.io/badge/paypal-donate-yellow.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QB8GQPZAH84N6 "Donate once-off to this project using Paypal")
 [![BitCoin donate button](https://img.shields.io/badge/bitcoin-donate-yellow.svg)](https://coinbase.com/checkouts/9ef59f5479eec1d97d63382c9ebcb93a "Donate once-off to this project using BitCoin")
@@ -24,7 +24,7 @@
 
 <!-- DESCRIPTION/ -->
 
-Common utility functions for Node.js used and maintained by Benjamin Lupton
+Scan a directory recursively with a lot of control and power
 
 <!-- /DESCRIPTION -->
 
@@ -34,52 +34,54 @@ Common utility functions for Node.js used and maintained by Benjamin Lupton
 ## Install
 
 ### [NPM](http://npmjs.org/)
-- Use: `require('bal-util')`
-- Install: `npm install --save bal-util`
-
-### [Browserify](http://browserify.org/)
-- Use: `require('bal-util')`
-- Install: `npm install --save bal-util`
-- CDN URL: `//wzrd.in/bundle/bal-util@2.4.3`
-
-### [Ender](http://ender.jit.su/)
-- Use: `require('bal-util')`
-- Install: `ender add bal-util`
+- Use: `require('scandirectory')`
+- Install: `npm install --save scandirectory`
 
 <!-- /INSTALL -->
 
 
 ## Usage
-Best off looking at source, it's well documented, and there are plenty of tests
 
+- `scandir(path, opts, next?)``
+- `scandir(opts, next?)``
 
+Options:
 
-## Future
-We're in the process of abstracting the pieces of bal-util out into their own modules. So far, we've done the following:
+- `path`: the path you want to read
+- `action`: (default null) can be null or a function to use for both the fileAction and dirAction
+- `fileAction`: (default null) can be null or a function to run against each file, in the following format:
+	- `fileAction(fileFullPath, fileRelativePath, next(err,skip), fileStat)``
+- `dirAction`: (default null) can be null or a function to run against each directory, in the following format:
+	- `dirAction(fileFullPath, fileRelativePath, next(err,skip), fileStat)``
+- `next`: (default null) can be null or a function to run after the entire directory has been scanned, in the following format:
+	- `next(err, list, tree)``
+- `stat`: (default null) can be null or a file stat object for the path if we already have one (not actually used yet)
+- `recurse`: (default true) can be null or a boolean for whether or not to scan subdirectories too
+- `readFiles`: (default false) can be null or a boolean for whether or not we should read the file contents
+- `ignorePaths`: (default false) can be null or an array of paths that we should ignore
+- `ignoreHiddenFiles`: (default false) can be null or a boolean for if we should ignore files starting with a dot
+- `ignoreCommonPatterns`: (default false) can be null or a boolean or a regex
+	- if null, becomes true
+	- if false, does not do any ignore patterns
+	- if true, defaults to bevry/ignorepatterns
+	- if regex, uses this value instead of bevry/ignorepatterns
+- `ignoreCustomPatterns`: (default false) can be null or a boolean or a regex (same as ignoreCommonPatterns but for ignoreCustomPatterns instead)
 
-- [ambi](https://github.com/bevry/ambi) < `balUtilFlow.fireWithOptionalCallback`
-- [binaryextensions](https://github.com/bevry/binaryextensions) < `balUtilPaths.binaryExtensions`
-- [eachr](https://github.com/bevry/eachr) < `balUtilFlow.each`
-- [event-emitter-grouped](https://github.com/bevry/event-emitter-grouped) < `balUtilEvents.EventEmitterEnhanced`
-- [extendr](https://github.com/bevry/extendr) < `balUtilFlow.(extend|clone|etc)`
-- [extract-opts](https://github.com/bevry/extract-opts) < `balUtilFlow.extractOptsAndCallback`
-- [getsetdeep](https://github.com/bevry/getsetdeep) < `balUtilFlow.(get|set)Deep`
-- [ignorefs](https://github.com/bevry/ignorefs) < `balUtilPaths.isIgnoredPath`
-- [ignorepatterns](https://github.com/bevry/ignorepatterns/blob/master/HISTORY.md) < `balUtilPaths.ignoreCommonPatterns`
-- [istextorbinary](https://github.com/bevry/istextorbinary) < `balUtilPaths.(isTextSync|isText|getEncodingSync|getEncoding)`
-- [safecallback](https://github.com/bevry/safecallback) < `balUtilFlow.safeCallback`
-- [safefs](https://github.com/bevry/safefs) < `balUtilPaths.(openFile|closeFile|etc)`
-- [safeps](https://github.com/bevry/safeps) < `balUtilModules`
-- [taskgroup](https://github.com/bevry/taskgroup) < `balUtilFlow.Group`
-- [textextensions](https://github.com/bevry/textextensions) < `balUtilPaths.textExtensions`
-- [typechecker](https://github.com/bevry/typechecker) < `balUtilTypes`
+Next Callback Arguments:
+
+- `err`: null, or an error that has occured
+- `list`: a collection of all the child nodes in a list/object format:
+	- `{fileRelativePath: 'dir|file'}`
+- `tree`: a colleciton of all the child nodes in a tree format:
+	- `{dir: {dir:{}, file1:true} }`
+	- if the readFiles option is true, then files will be returned with their contents instead
 
 
 <!-- CONTRIBUTE/ -->
 
 ## Contribute
 
-[Discover how you can contribute by heading on over to the `CONTRIBUTING.md` file.](https://github.com/balupton/bal-util/blob/master/CONTRIBUTING.md#files)
+[Discover how you can contribute by heading on over to the `CONTRIBUTING.md` file.](https://github.com/bevry/scandirectory/blob/master/CONTRIBUTING.md#files)
 
 <!-- /CONTRIBUTE -->
 
@@ -87,7 +89,7 @@ We're in the process of abstracting the pieces of bal-util out into their own mo
 <!-- HISTORY/ -->
 
 ## History
-[Discover the change history by heading on over to the `HISTORY.md` file.](https://github.com/balupton/bal-util/blob/master/HISTORY.md#files)
+[Discover the change history by heading on over to the `HISTORY.md` file.](https://github.com/bevry/scandirectory/blob/master/HISTORY.md#files)
 
 <!-- /HISTORY -->
 
@@ -106,7 +108,7 @@ These amazing people are maintaining this project:
 
 No sponsors yet! Will you be the first?
 
-[![Gratipay donate button](https://img.shields.io/gratipay/balupton.svg)](https://www.gratipay.com/balupton/ "Donate weekly to this project using Gratipay")
+[![Gratipay donate button](https://img.shields.io/gratipay/bevry.svg)](https://www.gratipay.com/bevry/ "Donate weekly to this project using Gratipay")
 [![Flattr donate button](https://img.shields.io/badge/flattr-donate-yellow.svg)](http://flattr.com/thing/344188/balupton-on-Flattr "Donate monthly to this project using Flattr")
 [![PayPayl donate button](https://img.shields.io/badge/paypal-donate-yellow.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QB8GQPZAH84N6 "Donate once-off to this project using Paypal")
 [![BitCoin donate button](https://img.shields.io/badge/bitcoin-donate-yellow.svg)](https://coinbase.com/checkouts/9ef59f5479eec1d97d63382c9ebcb93a "Donate once-off to this project using BitCoin")
@@ -114,12 +116,8 @@ No sponsors yet! Will you be the first?
 
 ### Contributors
 
-These amazing people have contributed code to this project:
-
-- [Benjamin Lupton](https://github.com/balupton) <b@lupton.cc> — [view contributions](https://github.com/balupton/bal-util/commits?author=balupton)
-- [Sean Fridman](https://github.com/sfrdmn) <fridman@mail.sfsu.edu> — [view contributions](https://github.com/balupton/bal-util/commits?author=sfrdmn)
-
-[Become a contributor!](https://github.com/balupton/bal-util/blob/master/CONTRIBUTING.md#files)
+No contributors yet! Will you be the first?
+[Discover how you can contribute by heading on over to the `CONTRIBUTING.md` file.](https://github.com/bevry/scandirectory/blob/master/CONTRIBUTING.md#files)
 
 <!-- /BACKERS -->
 
@@ -131,6 +129,7 @@ These amazing people have contributed code to this project:
 Licensed under the incredibly [permissive](http://en.wikipedia.org/wiki/Permissive_free_software_licence) [MIT license](http://creativecommons.org/licenses/MIT/)
 
 Copyright &copy; 2011+ Benjamin Lupton <b@lupton.cc> (http://balupton.com)
+<br/>Copyright &copy; 2014+ Bevry Pty Ltd <us@bevry.me> (http://bevry.me)
 
 <!-- /LICENSE -->
 
