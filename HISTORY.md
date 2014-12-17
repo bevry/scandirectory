@@ -1,6 +1,6 @@
 # History
 
-## v2.5.0 December 12, 2014
+## v2.5.0 December 17, 2014
 - Extracted from [balupton/bal-util](https://github.com/balupton/bal-util)
 - Changed accepted arguments
 
