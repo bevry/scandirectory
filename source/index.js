@@ -1,209 +1,153 @@
-# Import
-pathUtil = require('path')
-safefs = require('safefs')
-{TaskGroup} = require('taskgroup')
-ignorefs = require('ignorefs')
+/* eslint no-inner-declarations:0 */
 
-# Internal: Is it a directory?
-# Path can also be a stat object
-# next(err, isDirectory, fileStat)
-isDirectoryUtil = (path,next) ->
-	# Check if path is a stat object
-	if path?.isDirectory?
-		return next(null, path.isDirectory(), path)
+// Import
+const {relative, join} = require('path')
+const {readFileSync} = require('fs')
+const readdir = require('readdir-cluster')
+const ignorefs = require('ignorefs')
 
-	# Otherwise fetch the stat and do the check
-	else
-		safefs.stat path, (err,stat) ->
-			# Error
-			return next(err)  if err
+// Scan a directory recursively
+function scandirectory (...args) {
+	// Prepare
+	const list = {}
+	const trees = {}
+	const files = {}
 
-			# Success
-			return next(null, stat.isDirectory(), stat)
-
-	# Chain
-	@
-
-# Public: Scan a direcotry recursively
-# See README for usage and options
-scandir = (args...) ->
-		# Prepare
-		list = {}
-		tree = {}
-
-		# Support the different argument formats
-		opts = {}
-		for arg in args
-			# Path
-			if typeof arg is 'string'
+	// Support the different argument formats
+	const opts = {}
+	args.forEach(function (arg) {
+		switch ( typeof arg ) {
+			case 'string':
 				opts.path = arg
-
-			# Next
-			if typeof arg is 'function'
+				break
+			case 'function':
 				opts.next = arg
-
-			# Options
-			for own key,value of arg
-				opts[key] = value
-
-		# Prepare defaults
-		opts.recurse ?= true
-		opts.readFiles ?= false
-		opts.ignorePaths ?= false
-		opts.ignoreHiddenFiles ?= false
-		opts.ignoreCommonPatterns ?= false
-		opts.next ?= (err) ->
-			throw err  if err
-		next = opts.next
-
-		# Action
-		if opts.action?
-			opts.fileAction ?= opts.action
-			opts.dirAction ?= opts.action
-
-		# Check needed
-		if opts.parentPath and !opts.path
-			opts.path = opts.parentPath
-		if !opts.path
-			err = new Error('scandirectory: path is needed')
-			return next(err)
-
-		# Cycle
-		safefs.readdir opts.path, (err,files) ->
-			# Checks
-			return next(err)  if err
-			return next(null,list,tree)  if files.length is 0
-
-			# Group
-			tasks = new TaskGroup(concurrency:0).done (err) ->
-				return opts.next(err, list, tree)
-
-			# Cycle
-			files.forEach (file) ->  tasks.addTask (complete) ->
-				# Prepare
-				fileFullPath = pathUtil.join(opts.path,file)
-				fileRelativePath =
-					if opts.relativePath
-						pathUtil.join(opts.relativePath,file)
-					else
-						file
-
-				# Check
-				isIgnoredFile = ignorefs.isIgnoredPath(fileFullPath,{
-					ignorePaths: opts.ignorePaths
-					ignoreHiddenFiles: opts.ignoreHiddenFiles
-					ignoreCommonPatterns: opts.ignoreCommonPatterns
-					ignoreCustomPatterns: opts.ignoreCustomPatterns
+				break
+			case 'object':
+				Object.keys(arg).forEach(function (key) {
+					opts[key] = arg[key]
 				})
-				return complete()  if isIgnoredFile
+				break
+			default:
+				throw new Error('scandirectory: unknown argument')
+		}
+	})
 
-				# IsDirectory
-				isDirectoryUtil fileFullPath, (err,isDirectory,fileStat) ->
-					# Checks
-					return complete(err)  if err
-					return complete()     if tasks.paused
+	// Prepare defaults
+	if ( opts.recurse == null )  opts.recurse = true
+	if ( opts.readFiles == null )  opts.readFiles = false
+	if ( opts.next == null )  opts.next = function (err) { if ( err ) throw err }
+	const next = opts.next
 
-					# Directory
-					if isDirectory
-						# Prepare
-						handle = (err,skip,subtreeCallback) ->
-							# Checks
-							return complete(err)  if err
-							return complete()     if tasks.paused
-							return complete()     if skip
+	// Action
+	if ( opts.action != null ) {
+		if ( opts.fileAction == null )  opts.fileAction = opts.action
+		if ( opts.dirAction == null )  opts.dirAction = opts.action
+	}
 
-							# Append
-							list[fileRelativePath] = 'dir'
-							tree[file] = {}
+	// Check needed
+	if ( !opts.path ) {
+		if ( opts.parentPath ) {
+			opts.path = opts.parentPath
+		}
+		else {
+			const err = new Error('scandirectory: path is needed')
+			return next(err)
+		}
+	}
 
-							# No Recurse
-							return complete()  unless opts.recurse
+	// Check
+	if ( opts.readFiles && next.length < 2 ) {
+		const err = new Error('scandirectory: readFiles is set but not enough completion callback arguments to receive the data')
+		return next(err)
+	}
 
-							# Recurse
-							return scandir(
-								# Path
-								path: fileFullPath
-								relativePath: fileRelativePath
+	// Iterator
+	function iterator (fullPath, filename, stat) {
+		// Prepare
+		const relativePath = relative(opts.path, fullPath)
+		if ( next.length >= 2 ) {
+			files[relativePath] = filename
+		}
 
-								# Options
-								fileAction: opts.fileAction
-								dirAction: opts.dirAction
-								readFiles: opts.readFiles
-								ignorePaths: opts.ignorePaths
-								ignoreHiddenFiles: opts.ignoreHiddenFiles
-								ignoreCommonPatterns: opts.ignoreCommonPatterns
-								ignoreCustomPatterns: opts.ignoreCustomPatterns
-								recurse: opts.recurse
-								stat: opts.fileStat
+		// Check
+		if ( ignorefs.isIgnoredPath(fullPath, opts) ) {
+			return false
+		}
 
-								# Completed
-								next: (err,_list,_tree) ->
-									# Merge in children of the parent directory
-									tree[file] = _tree
-									for own filePath, fileType of _list
-										list[filePath] = fileType
+		// Directory
+		if ( stat.directory ) {
+			// Skip?
+			const skip = opts.dirAction === false || opts.dirAction && opts.dirAction(fullPath, relativePath, filename, stat) === false
+			if ( skip )  return false
 
-									# Checks
-									return complete(err)  if err
-									return complete()     if tasks.paused
-									return subtreeCallback(complete)  if subtreeCallback
-									return complete()
-							)
+			// Append
+			if ( next.length >= 2 ) {
+				list[relativePath] = 'dir'
+				if ( next.length === 3 ) {
+					trees[relativePath] = {}
+				}
+			}
 
-						# Action
-						if opts.dirAction
-							return opts.dirAction(fileFullPath, fileRelativePath, handle, fileStat)
-						else if opts.dirAction is false
-							return handle(err,true)
-						else
-							return handle(err,false)
+			// No Recurse
+			if ( !opts.recurse )  return false
+		}
 
-					# File
-					else
-						# Prepare
-						handle = (err,skip) ->
-							# Checks
-							return complete(err)  if err
-							return complete()     if tasks.paused
-							return complete()     if skip
+		// File
+		else {
+			// Skip?
+			const skip = opts.fileAction === false || opts.fileAction && opts.fileAction(fullPath, relativePath, filename, stat) === false
+			if ( skip )  return false
 
-							# Append
-							if opts.readFiles
-								# Read file
-								safefs.readFile fileFullPath, (err,data) ->
-									# Check
-									return complete(err)  if err
+			// Append
+			if ( opts.readFiles ) {
+				// Read file
+				let data = readFileSync(fullPath)
+				if ( opts.readFiles !== 'binary' ) {
+					data = data.toString()
+				}
+				list[relativePath] = data
+				if ( next.length === 3 ) {
+					trees[relativePath] = data
+				}
+			}
+			else if ( next.length >= 2 ) {
+				list[relativePath] = 'file'
+				if ( next.length === 3 ) {
+					trees[relativePath] = true
+				}
+			}
+		}
+	}
 
-									# Append
-									data = data.toString()  unless opts.readFiles is 'binary'
-									list[fileRelativePath] = data
-									tree[file] = data
+	// Read
+	readdir(opts.path, iterator, function (err) {
+		if ( err ) {
+			next(err)
+		}
+		else if ( next.length <= 1 ) {
+			next(null)
+		}
+		else if ( next.length === 2 ) {
+			next(null, list)
+		}
+		else {
+			const tree = {}
+			Object.keys(list).sort().forEach(function (relativePath) {
+				const filename = files[relativePath]
+				// root?
+				if ( relativePath === filename ) {
+					tree[relativePath] = trees[relativePath]
+				}
+				else {
+					const parent = join(relativePath, '..')
+					trees[parent][filename] = trees[relativePath]
+				}
+			})
+			next(null, list, tree)
+		}
+	})
+}
 
-									# Done
-									return complete()
-
-							else
-								# Append
-								list[fileRelativePath] = 'file'
-								tree[file] = true
-
-								# Done
-								return complete()
-
-						# Action
-						if opts.fileAction
-							return opts.fileAction(fileFullPath, fileRelativePath, handle, fileStat)
-						else if opts.fileAction is false
-							return handle(err,true)
-						else
-							return handle(err,false)
-
-			# Run the tasks
-			tasks.run()
-
-		# Chain
-		@
-
-# Export
-module.exports = scandir
-module.exports.scandirectory = module.exports.scandir = scandir
+// Export
+module.exports = scandirectory
