@@ -86,11 +86,11 @@ scandir(path, options, completionCallback)
 
 Scan directory options:
 
-- `action` - (default null) can be `null` or a function to use for both the fileAction and dirAction
-- `fileAction` - (default null) can be `null`, `false`, or a function to be the action callback
-- `dirAction` - (default null) can be `null`, `false`, or a function to the action callback
-- `recurse` - (default true) can be `null` or a boolean for whether or not to scan subdirectories too
-- `readFiles` - (default false) can be `null` or a boolean for whether or not we should read the file contents
+- `action` - (default `null`) can be `null` or a function to use for both the fileAction and dirAction
+- `fileAction` - (default `null`) can be `null`, `false`, or a function to be the action callback
+- `dirAction` - (default `null`) can be `null`, `false`, or a function to the action callback
+- `recurse` - (default `true`) can be `null` or a boolean for whether or not to scan subdirectories too
+- `readFiles` - (default `false`) can be `null` or a boolean for whether or not we should read the file contents
 
 The options object is also sent to [ignorepatterns](https://github.com/bevry/ignorepatterns) so you can use its options too
 
