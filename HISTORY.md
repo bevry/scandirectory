@@ -1,5 +1,8 @@
 # History
 
+## v3.0.1 2016 October 20
+- Repackaged
+
 ## v3.0.0 2016 October 20
 - Simplified and now powered by [readdir-cluster](https://github.com/bevry/readdir-cluster)
 - Converted from CoffeeScript to JavaScript
