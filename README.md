@@ -92,7 +92,7 @@ Scan directory options:
 - `recurse` - (default `true`) can be `null` or a boolean for whether or not to scan subdirectories too
 - `readFiles` - (default `false`) can be `null` or a boolean for whether or not we should read the file contents
 
-The options object is also sent to [ignorepatterns](https://github.com/bevry/ignorepatterns) so you can use its options too
+The options object is also sent to [ignorefs](https://github.com/bevry/ignorefs) so you can use its options too
 
 The completion callback accepts the following arguments:
 
