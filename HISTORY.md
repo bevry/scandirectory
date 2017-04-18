@@ -4,7 +4,7 @@
 - Repackaged
 
 ## v3.0.0 2016 October 20
-- Backwards compatibility breals:
+- Backwards compatibility breaks:
   - Action callbacks now accept different arguments than before
 - Simplified and now powered by [readdir-cluster](https://github.com/bevry/readdir-cluster)
 - Converted from CoffeeScript to JavaScript
