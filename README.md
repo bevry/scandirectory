@@ -48,7 +48,7 @@ Scan a directory recursively with a lot of control and power
 
 <ul><li><code>scandirectory</code> aliases <code>scandirectory/index.js</code> which uses <a href="https://editions.bevry.me" title="Editions are the best way to produce and consume packages you care about.">Editions</a> to automatically select the correct edition for the consumers environment</li>
 <li><code>scandirectory/source/index.js</code> is esnext source code with require for modules</li>
-<li><code>scandirectory/edition-node-0.12/index.js</code> is esnext compiled for node.js with require for modules</li></ul>
+<li><code>scandirectory/edition-node-0.12/index.js</code> is esnext compiled for node.js 0.12 with require for modules</li></ul>
 
 <!-- /INSTALL -->
 
