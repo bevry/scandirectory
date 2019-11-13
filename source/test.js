@@ -1,14 +1,16 @@
+'use strict'
+
 // Import
-const {deepEqual} = require('assert-helpers')
-const joe = require('joe')
-const scandirectory = require('../')
+const { deepEqual } = require('assert-helpers')
+const kava = require('kava')
+const scandirectory = require('./')
 
 // Prepare
 const path = require('path').join(__dirname, '..', 'test-fixtures')
 
 // Test
-joe.suite('scandirectory', function (suite, test) {
-	test('default', function (done) {
+kava.suite('scandirectory', function(suite, test) {
+	test('default', function(done) {
 		const expected = {
 			list: {
 				'a file.txt': 'file',
@@ -22,15 +24,15 @@ joe.suite('scandirectory', function (suite, test) {
 				}
 			}
 		}
-		scandirectory(path, function (err, list, tree) {
-			if ( err )  return done(err)
+		scandirectory(path, function(err, list, tree) {
+			if (err) return done(err)
 			deepEqual(list, expected.list, 'compare list')
 			deepEqual(tree, expected.tree, 'compare tree')
 			done()
 		})
 	})
 
-	test('false dirAction', function (done) {
+	test('false dirAction', function(done) {
 		const expected = {
 			list: {
 				'a file.txt': 'file'
@@ -39,15 +41,15 @@ joe.suite('scandirectory', function (suite, test) {
 				'a file.txt': true
 			}
 		}
-		scandirectory(path, {dirAction: false}, function (err, list, tree) {
-			if ( err )  return done(err)
+		scandirectory(path, { dirAction: false }, function(err, list, tree) {
+			if (err) return done(err)
 			deepEqual(list, expected.list, 'compare list')
 			deepEqual(tree, expected.tree, 'compare tree')
 			done()
 		})
 	})
 
-	test('false fileAction', function (done) {
+	test('false fileAction', function(done) {
 		const expected = {
 			list: {
 				'a directory': 'dir'
@@ -56,15 +58,15 @@ joe.suite('scandirectory', function (suite, test) {
 				'a directory': {}
 			}
 		}
-		scandirectory(path, {fileAction: false}, function (err, list, tree) {
-			if ( err )  return done(err)
+		scandirectory(path, { fileAction: false }, function(err, list, tree) {
+			if (err) return done(err)
 			deepEqual(list, expected.list, 'compare list')
 			deepEqual(tree, expected.tree, 'compare tree')
 			done()
 		})
 	})
 
-	test('no recurse', function (done) {
+	test('no recurse', function(done) {
 		const expected = {
 			list: {
 				'a file.txt': 'file',
@@ -75,15 +77,15 @@ joe.suite('scandirectory', function (suite, test) {
 				'a directory': {}
 			}
 		}
-		scandirectory(path, {recurse: false}, function (err, list, tree) {
-			if ( err )  return done(err)
+		scandirectory(path, { recurse: false }, function(err, list, tree) {
+			if (err) return done(err)
 			deepEqual(list, expected.list, 'compare list')
 			deepEqual(tree, expected.tree, 'compare tree')
 			done()
 		})
 	})
 
-	test('readfiles', function (done) {
+	test('readfiles', function(done) {
 		const expected = {
 			list: {
 				'a file.txt': 'contents of a file\n',
@@ -97,8 +99,8 @@ joe.suite('scandirectory', function (suite, test) {
 				}
 			}
 		}
-		scandirectory(path, {readFiles: true}, function (err, list, tree) {
-			if ( err )  return done(err)
+		scandirectory(path, { readFiles: true }, function(err, list, tree) {
+			if (err) return done(err)
 			deepEqual(list, expected.list, 'compare list')
 			deepEqual(tree, expected.tree, 'compare tree')
 			done()
