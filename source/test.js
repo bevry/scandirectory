@@ -9,39 +9,22 @@ const scandirectory = require('./')
 const path = require('path').join(__dirname, '..', 'test-fixtures')
 
 // Test
-kava.suite('scandirectory', function(suite, test) {
-	test('default', function(done) {
+kava.suite('scandirectory', function (suite, test) {
+	test('default', function (done) {
 		const expected = {
 			list: {
 				'a file.txt': 'file',
 				'a directory': 'dir',
-				'a directory/a sub file.txt': 'file'
+				'a directory/a sub file.txt': 'file',
 			},
 			tree: {
 				'a file.txt': true,
 				'a directory': {
-					'a sub file.txt': true
-				}
-			}
-		}
-		scandirectory(path, function(err, list, tree) {
-			if (err) return done(err)
-			deepEqual(list, expected.list, 'compare list')
-			deepEqual(tree, expected.tree, 'compare tree')
-			done()
-		})
-	})
-
-	test('false dirAction', function(done) {
-		const expected = {
-			list: {
-				'a file.txt': 'file'
+					'a sub file.txt': true,
+				},
 			},
-			tree: {
-				'a file.txt': true
-			}
 		}
-		scandirectory(path, { dirAction: false }, function(err, list, tree) {
+		scandirectory(path, function (err, list, tree) {
 			if (err) return done(err)
 			deepEqual(list, expected.list, 'compare list')
 			deepEqual(tree, expected.tree, 'compare tree')
@@ -49,35 +32,16 @@ kava.suite('scandirectory', function(suite, test) {
 		})
 	})
 
-	test('false fileAction', function(done) {
-		const expected = {
-			list: {
-				'a directory': 'dir'
-			},
-			tree: {
-				'a directory': {}
-			}
-		}
-		scandirectory(path, { fileAction: false }, function(err, list, tree) {
-			if (err) return done(err)
-			deepEqual(list, expected.list, 'compare list')
-			deepEqual(tree, expected.tree, 'compare tree')
-			done()
-		})
-	})
-
-	test('no recurse', function(done) {
+	test('false dirAction', function (done) {
 		const expected = {
 			list: {
 				'a file.txt': 'file',
-				'a directory': 'dir'
 			},
 			tree: {
 				'a file.txt': true,
-				'a directory': {}
-			}
+			},
 		}
-		scandirectory(path, { recurse: false }, function(err, list, tree) {
+		scandirectory(path, { dirAction: false }, function (err, list, tree) {
 			if (err) return done(err)
 			deepEqual(list, expected.list, 'compare list')
 			deepEqual(tree, expected.tree, 'compare tree')
@@ -85,21 +49,57 @@ kava.suite('scandirectory', function(suite, test) {
 		})
 	})
 
-	test('readfiles', function(done) {
+	test('false fileAction', function (done) {
+		const expected = {
+			list: {
+				'a directory': 'dir',
+			},
+			tree: {
+				'a directory': {},
+			},
+		}
+		scandirectory(path, { fileAction: false }, function (err, list, tree) {
+			if (err) return done(err)
+			deepEqual(list, expected.list, 'compare list')
+			deepEqual(tree, expected.tree, 'compare tree')
+			done()
+		})
+	})
+
+	test('no recurse', function (done) {
+		const expected = {
+			list: {
+				'a file.txt': 'file',
+				'a directory': 'dir',
+			},
+			tree: {
+				'a file.txt': true,
+				'a directory': {},
+			},
+		}
+		scandirectory(path, { recurse: false }, function (err, list, tree) {
+			if (err) return done(err)
+			deepEqual(list, expected.list, 'compare list')
+			deepEqual(tree, expected.tree, 'compare tree')
+			done()
+		})
+	})
+
+	test('readfiles', function (done) {
 		const expected = {
 			list: {
 				'a file.txt': 'contents of a file\n',
 				'a directory': 'dir',
-				'a directory/a sub file.txt': 'contents of a sub file\n'
+				'a directory/a sub file.txt': 'contents of a sub file\n',
 			},
 			tree: {
 				'a file.txt': 'contents of a file\n',
 				'a directory': {
-					'a sub file.txt': 'contents of a sub file\n'
-				}
-			}
+					'a sub file.txt': 'contents of a sub file\n',
+				},
+			},
 		}
-		scandirectory(path, { readFiles: true }, function(err, list, tree) {
+		scandirectory(path, { readFiles: true }, function (err, list, tree) {
 			if (err) return done(err)
 			deepEqual(list, expected.list, 'compare list')
 			deepEqual(tree, expected.tree, 'compare tree')

@@ -33,41 +33,19 @@ Scan a directory recursively with a lot of control and power
 <!-- /DESCRIPTION -->
 
 
-<!-- INSTALL/ -->
-
-<h2>Install</h2>
-
-<a href="https://npmjs.com" title="npm is a package manager for javascript"><h3>npm</h3></a>
-<ul>
-<li>Install: <code>npm install --save scandirectory</code></li>
-<li>Require: <code>require('scandirectory')</code></li>
-</ul>
-
-<h3><a href="https://editions.bevry.me" title="Editions are the best way to produce and consume packages you care about.">Editions</a></h3>
-
-<p>This package is published with the following editions:</p>
-
-<ul><li><code>scandirectory</code> aliases <code>scandirectory/source/index.js</code></li>
-<li><code>scandirectory/source/index.js</code> is esnext source code with require for modules</li></ul>
-
-<p>Environments older than Node.js v8 may need <a href="https://babeljs.io/docs/usage/polyfill/" title="A polyfill that emulates missing ECMAScript environment features">Babel's Polyfill</a> or something similar.</p>
-
-<!-- /INSTALL -->
-
-
 ## Usage
 
-``` javascript
+```javascript
 var scandir = require('scandirectory')
 var path = process.cwd()
 var options = {}
-function completionCallback (err, list, tree) {
-	console.log({
-		error: err,
-		list: list,
-		tree: tree
-	})
-	/*
+function completionCallback(err, list, tree) {
+    console.log({
+        error: err,
+        list: list,
+        tree: tree,
+    })
+    /*
 	{
 		error: null,
 		list: {
@@ -89,34 +67,30 @@ scandir(path, options, completionCallback)
 
 Scan directory options:
 
-- `action` - (default `null`) can be `null` or a function to use for both the fileAction and dirAction
-- `fileAction` - (default `null`) can be `null`, `false`, or a function to be the action callback
-- `dirAction` - (default `null`) can be `null`, `false`, or a function to the action callback
-- `recurse` - (default `true`) can be `null` or a boolean for whether or not to scan subdirectories too
-- `readFiles` - (default `false`) can be `null` or a boolean for whether or not we should read the file contents
+-   `action` - (default `null`) can be `null` or a function to use for both the fileAction and dirAction
+-   `fileAction` - (default `null`) can be `null`, `false`, or a function to be the action callback
+-   `dirAction` - (default `null`) can be `null`, `false`, or a function to the action callback
+-   `recurse` - (default `true`) can be `null` or a boolean for whether or not to scan subdirectories too
+-   `readFiles` - (default `false`) can be `null` or a boolean for whether or not we should read the file contents
 
 The options object is also sent to [ignorefs](https://github.com/bevry/ignorefs) so you can use its options too
 
 The completion callback accepts the following arguments:
 
-- `err` - `null` or an error that has occured
-- `list` - a collection of all the child nodes in a list/object format:
-	- `{fileRelativePath: 'dir|file'}`
-- `tree` - a collection of all the child nodes in a tree format:
-	- `{dir: {dir:{}, file1:true} }`
-	- if the readFiles option is true, then files will be returned with their contents instead
+-   `err` - `null` or an error that has occured
+-   `list` - a collection of all the child nodes in a list/object format: - `{fileRelativePath: 'dir|file'}`
+-   `tree` - a collection of all the child nodes in a tree format: - `{dir: {dir:{}, file1:true} }` - if the readFiles option is true, then files will be returned with their contents instead
 
 The results for a specific argument is only generated if the argument is requested.
 
 The action callbacks accept the following arguments:
 
-- `fullPath` - the full/absolute path of the current file/directory
-- `relativePath` - the relative path of the current file/directory with respect to the original scanning path
-- `filename` - the basename of the current file/directory
-- `stat` - a simple stat object provided by [readdir-cluster](https://github.com/bevry/readdir-cluster)
+-   `fullPath` - the full/absolute path of the current file/directory
+-   `relativePath` - the relative path of the current file/directory with respect to the original scanning path
+-   `filename` - the basename of the current file/directory
+-   `stat` - a simple stat object provided by [readdir-cluster](https://github.com/bevry/readdir-cluster)
 
 The action callbacks can return `false` to skip the path from being processed further.
-
 
 <!-- CONTRIBUTE/ -->
 
@@ -125,6 +99,27 @@ The action callbacks can return `false` to skip the path from being processed fu
 <a href="https://github.com/bevry/scandirectory/blob/master/CONTRIBUTING.md#files">Discover how you can contribute by heading on over to the <code>CONTRIBUTING.md</code> file.</a>
 
 <!-- /CONTRIBUTE -->
+
+
+<!-- INSTALL/ -->
+
+<h2>Install</h2>
+
+<a href="https://npmjs.com" title="npm is a package manager for javascript"><h3>npm</h3></a>
+<ul>
+<li>Install: <code>npm install --save scandirectory</code></li>
+<li>Import: <code>import * as pkg from ('scandirectory')</code></li>
+<li>Require: <code>const pkg = require('scandirectory')</code></li>
+</ul>
+
+<h3><a href="https://editions.bevry.me" title="Editions are the best way to produce and consume packages you care about.">Editions</a></h3>
+
+<p>This package is published with the following editions:</p>
+
+<ul><li><code>scandirectory</code> aliases <code>scandirectory/source/index.js</code></li>
+<li><code>scandirectory/source/index.js</code> is <a href="https://en.wikipedia.org/wiki/ECMAScript#ES.Next" title="ECMAScript Next">ESNext</a> source code for <a href="https://nodejs.org" title="Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine">Node.js</a> with <a href="https://nodejs.org/dist/latest-v5.x/docs/api/modules.html" title="Node/CJS Modules">Require</a> for modules</li></ul>
+
+<!-- /INSTALL -->
 
 
 <!-- HISTORY/ -->
@@ -144,7 +139,7 @@ The action callbacks can return `false` to skip the path from being processed fu
 
 These amazing people are maintaining this project:
 
-<ul><li><a href="http://balupton.com">Benjamin Lupton</a> — <a href="https://github.com/bevry/scandirectory/commits?author=balupton" title="View the GitHub contributions of Benjamin Lupton on repository bevry/scandirectory">view contributions</a></li></ul>
+<ul><li><a href="https://balupton.com">Benjamin Lupton</a> — <a href="https://github.com/bevry/scandirectory/commits?author=balupton" title="View the GitHub contributions of Benjamin Lupton on repository bevry/scandirectory">view contributions</a></li></ul>
 
 <h3>Sponsors</h3>
 
@@ -164,10 +159,9 @@ No sponsors yet! Will you be the first?
 
 These amazing people have contributed code to this project:
 
-<ul><li><a href="http://balupton.com">Benjamin Lupton</a> — <a href="https://github.com/bevry/scandirectory/commits?author=balupton" title="View the GitHub contributions of Benjamin Lupton on repository bevry/scandirectory">view contributions</a></li>
-<li><a href="http://seanfridman.com">Sean Fridman</a> — <a href="https://github.com/bevry/scandirectory/commits?author=sfrdmn" title="View the GitHub contributions of Sean Fridman on repository bevry/scandirectory">view contributions</a></li>
-<li><a href="http://www.linkedin.com/in/lysenkobv">Bogdan Lysenko</a> — <a href="https://github.com/bevry/scandirectory/commits?author=lysenkobv" title="View the GitHub contributions of Bogdan Lysenko on repository bevry/scandirectory">view contributions</a></li>
-<li><a href="http://github.com/apps/dependabot-preview">dependabot-preview[bot]</a> — <a href="https://github.com/bevry/scandirectory/commits?author=dependabot-preview[bot]" title="View the GitHub contributions of dependabot-preview[bot] on repository bevry/scandirectory">view contributions</a></li></ul>
+<ul><li><a href="https://balupton.com">Benjamin Lupton</a> — <a href="https://github.com/bevry/scandirectory/commits?author=balupton" title="View the GitHub contributions of Benjamin Lupton on repository bevry/scandirectory">view contributions</a></li>
+<li><a href="https://github.com/lysenkobv">Bogdan Lysenko</a> — <a href="https://github.com/bevry/scandirectory/commits?author=lysenkobv" title="View the GitHub contributions of Bogdan Lysenko on repository bevry/scandirectory">view contributions</a></li>
+<li><a href="https://github.com/sfrdmn">Sean Fridman</a> — <a href="https://github.com/bevry/scandirectory/commits?author=sfrdmn" title="View the GitHub contributions of Sean Fridman on repository bevry/scandirectory">view contributions</a></li></ul>
 
 <a href="https://github.com/bevry/scandirectory/blob/master/CONTRIBUTING.md#files">Discover how you can contribute by heading on over to the <code>CONTRIBUTING.md</code> file.</a>
 
@@ -180,7 +174,7 @@ These amazing people have contributed code to this project:
 
 Unless stated otherwise all works are:
 
-<ul><li>Copyright &copy; 2011+ <a href="http://balupton.com">Benjamin Lupton</a></li>
+<ul><li>Copyright &copy; 2011+ <a href="https://balupton.com">Benjamin Lupton</a></li>
 <li>Copyright &copy; 2014+ <a href="http://bevry.me">Bevry Pty Ltd</a></li></ul>
 
 and licensed under:

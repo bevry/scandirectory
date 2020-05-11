@@ -16,7 +16,7 @@ function scandirectory(...args) {
 
 	// Support the different argument formats
 	const opts = {}
-	args.forEach(function(arg) {
+	args.forEach(function (arg) {
 		switch (typeof arg) {
 			case 'string':
 				opts.path = arg
@@ -25,7 +25,7 @@ function scandirectory(...args) {
 				opts.next = arg
 				break
 			case 'object':
-				Object.keys(arg).forEach(function(key) {
+				Object.keys(arg).forEach(function (key) {
 					opts[key] = arg[key]
 				})
 				break
@@ -38,7 +38,7 @@ function scandirectory(...args) {
 	if (opts.recurse == null) opts.recurse = true
 	if (opts.readFiles == null) opts.readFiles = false
 	if (opts.next == null)
-		opts.next = function(err) {
+		opts.next = function (err) {
 			if (err) throw err
 		}
 	const next = opts.next
@@ -131,7 +131,7 @@ function scandirectory(...args) {
 	}
 
 	// Read
-	readdir(opts.path, iterator, function(err) {
+	readdir(opts.path, iterator, function (err) {
 		if (err) {
 			next(err)
 		} else if (next.length <= 1) {
@@ -142,7 +142,7 @@ function scandirectory(...args) {
 			const tree = {}
 			Object.keys(list)
 				.sort()
-				.forEach(function(relativePath) {
+				.forEach(function (relativePath) {
 					const filename = files[relativePath]
 					// root?
 					if (relativePath === filename) {
