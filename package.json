@@ -1,6 +1,6 @@
 {
   "name": "scandirectory",
-  "version": "6.8.0",
+  "version": "6.9.0",
   "description": "Scan a directory recursively with a lot of control and power",
   "homepage": "https://github.com/bevry/scandirectory",
   "license": "MIT",
@@ -89,19 +89,19 @@
   "type": "commonjs",
   "main": "source/index.js",
   "dependencies": {
-    "ignorefs": "^3.6.0",
-    "readdir-cluster": "^3.6.0"
+    "ignorefs": "^3.9.0",
+    "readdir-cluster": "^3.9.0"
   },
   "devDependencies": {
-    "@bevry/update-contributors": "^1.9.0",
-    "assert-helpers": "^6.8.0",
-    "eslint": "^7.3.0",
-    "eslint-config-bevry": "^3.8.0",
-    "eslint-config-prettier": "^6.7.0",
+    "@bevry/update-contributors": "^1.12.0",
+    "assert-helpers": "^6.13.0",
+    "eslint": "^7.3.1",
+    "eslint-config-bevry": "^3.13.0",
+    "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-prettier": "^3.1.4",
-    "kava": "^5.7.0",
+    "kava": "^5.8.0",
     "prettier": "^2.0.5",
-    "projectz": "^2.9.0",
+    "projectz": "^2.11.0",
     "valid-directory": "^2.5.0"
   },
   "scripts": {
