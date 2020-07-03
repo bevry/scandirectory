@@ -3,7 +3,7 @@
 // Import
 const { deepEqual } = require('assert-helpers')
 const kava = require('kava')
-const scandirectory = require('./')
+const scandirectory = require('./index.js')
 
 // Prepare
 const path = require('path').join(__dirname, '..', 'test-fixtures')
