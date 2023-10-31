@@ -1,7 +1,7 @@
 'use strict'
 
 // Import
-const { join, sep } = require('node:path')
+const { join, sep } = require('path')
 const { deepEqual } = require('assert-helpers')
 const kava = require('kava')
 const scandirectory = require('./index.js')
