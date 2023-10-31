@@ -1,12 +1,13 @@
 'use strict'
 
 // Import
+const { join, sep } = require('node:path')
 const { deepEqual } = require('assert-helpers')
 const kava = require('kava')
 const scandirectory = require('./index.js')
 
 // Prepare
-const path = require('path').join(__dirname, '..', 'test-fixtures')
+const path = join(__dirname, '..', 'test-fixtures')
 
 // Test
 kava.suite('scandirectory', function (suite, test) {
@@ -15,7 +16,7 @@ kava.suite('scandirectory', function (suite, test) {
 			list: {
 				'a file.txt': 'file',
 				'a directory': 'dir',
-				'a directory/a sub file.txt': 'file',
+				[`a directory${sep}a sub file.txt`]: 'file',
 			},
 			tree: {
 				'a file.txt': true,
@@ -90,7 +91,7 @@ kava.suite('scandirectory', function (suite, test) {
 			list: {
 				'a file.txt': 'contents of a file\n',
 				'a directory': 'dir',
-				'a directory/a sub file.txt': 'contents of a sub file\n',
+				[`a directory${sep}a sub file.txt`]: 'contents of a sub file\n',
 			},
 			tree: {
 				'a file.txt': 'contents of a file\n',
