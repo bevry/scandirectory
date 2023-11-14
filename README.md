@@ -115,8 +115,10 @@ The action callbacks can return `false` to skip the path from being processed fu
 
 <p>This package is published with the following editions:</p>
 
-<ul><li><code>scandirectory</code> aliases <code>scandirectory/source/index.js</code></li>
-<li><code>scandirectory/source/index.js</code> is <a href="https://en.wikipedia.org/wiki/ECMAScript#ES.Next" title="ECMAScript Next">ESNext</a> source code for <a href="https://nodejs.org" title="Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine">Node.js</a> 10 || 12 || 14 || 16 || 18 || 20 || 21 with <a href="https://nodejs.org/dist/latest-v5.x/docs/api/modules.html" title="Node/CJS Modules">Require</a> for modules</li></ul>
+<ul><li><code>scandirectory</code> aliases <code>scandirectory/index.cjs</code> which uses the <a href="https://github.com/bevry/editions" title="You can use the Editions Autoloader to autoload the appropriate edition for your consumers environment">Editions Autoloader</a> to automatically select the correct edition for the consumer's environment</li>
+<li><code>scandirectory/source/index.js</code> is <a href="https://en.wikipedia.org/wiki/ECMAScript#ES.Next" title="ECMAScript Next">ESNext</a> source code for <a href="https://nodejs.org" title="Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine">Node.js</a> 8 || 10 || 12 || 14 || 16 || 18 || 20 || 21 with <a href="https://nodejs.org/dist/latest-v5.x/docs/api/modules.html" title="Node/CJS Modules">Require</a> for modules</li>
+<li><code>scandirectory/edition-node-21/index.js</code> is <a href="https://en.wikipedia.org/wiki/ECMAScript#ES.Next" title="ECMAScript Next">ESNext</a> compiled for <a href="https://nodejs.org" title="Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine">Node.js</a> 21 with <a href="https://nodejs.org/dist/latest-v5.x/docs/api/modules.html" title="Node/CJS Modules">Require</a> for modules</li>
+<li><code>scandirectory/edition-node-4/index.js</code> is <a href="https://en.wikipedia.org/wiki/ECMAScript#ES.Next" title="ECMAScript Next">ESNext</a> compiled for <a href="https://nodejs.org" title="Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine">Node.js</a> 4 with <a href="https://nodejs.org/dist/latest-v5.x/docs/api/modules.html" title="Node/CJS Modules">Require</a> for modules</li></ul>
 
 <!-- /INSTALL -->
 
@@ -160,6 +162,7 @@ No sponsors yet! Will you be the first?
 These amazing people have contributed code to this project:
 
 <ul><li><a href="https://balupton.com">Benjamin Lupton</a> — <a href="https://github.com/bevry/scandirectory/commits?author=balupton" title="View the GitHub contributions of Benjamin Lupton on repository bevry/scandirectory">view contributions</a></li>
+<li><a href="https://github.com/bohdanly">Bohdan</a> — <a href="https://github.com/bevry/scandirectory/commits?author=bohdanly" title="View the GitHub contributions of Bohdan on repository bevry/scandirectory">view contributions</a></li>
 <li><a href="https://github.com/lysenkobv">Bohdan Lysenko</a> — <a href="https://github.com/bevry/scandirectory/commits?author=lysenkobv" title="View the GitHub contributions of Bohdan Lysenko on repository bevry/scandirectory">view contributions</a></li>
 <li><a href="https://github.com/sfrdmn">Sean Fridman</a> — <a href="https://github.com/bevry/scandirectory/commits?author=sfrdmn" title="View the GitHub contributions of Sean Fridman on repository bevry/scandirectory">view contributions</a></li></ul>
 

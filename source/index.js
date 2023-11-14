@@ -62,7 +62,7 @@ function scandirectory(...args) {
 	// Check
 	if (opts.readFiles && next.length < 2) {
 		const err = new Error(
-			'scandirectory: readFiles is set but not enough completion callback arguments to receive the data',
+			'scandirectory: readFiles is set but not enough completion callback arguments to receive the data'
 		)
 		return next(err)
 	}
