@@ -1,6 +1,6 @@
 {
   "name": "scandirectory",
-  "version": "7.1.0",
+  "version": "7.2.0",
   "description": "Scan a directory recursively with a lot of control and power",
   "homepage": "https://github.com/bevry/scandirectory",
   "license": "Artistic-2.0",
@@ -25,18 +25,19 @@
       "githubsponsors",
       "thanksdev",
       "patreon",
-      "flattr",
       "liberapay",
       "buymeacoffee",
       "opencollective",
       "crypto",
       "paypal",
-      "wishlist"
+      "---",
+      "discord",
+      "twitch"
     ],
     "config": {
       "githubWorkflow": "bevry",
       "githubSponsorsUsername": "balupton",
-      "thanksdevGithubUsername": "balupton",
+      "thanksdevGithubUsername": "bevry",
       "buymeacoffeeUsername": "balupton",
       "cryptoURL": "https://bevry.me/crypto",
       "flattrUsername": "balupton",
@@ -45,6 +46,9 @@
       "patreonUsername": "bevry",
       "paypalURL": "https://bevry.me/paypal",
       "wishlistURL": "https://bevry.me/wishlist",
+      "discordServerID": "1147436445783560193",
+      "discordServerInvite": "nQuXddV7VP",
+      "twitchUsername": "balupton",
       "githubUsername": "bevry",
       "githubRepository": "scandirectory",
       "githubSlug": "bevry/scandirectory",
@@ -106,24 +110,24 @@
   "main": "index.cjs",
   "dependencies": {
     "editions": "^6.13.0",
-    "ignorefs": "^4.1.0",
-    "readdir-cluster": "^5.0.0"
+    "ignorefs": "^4.2.0",
+    "readdir-cluster": "^5.1.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.23.0",
+    "@babel/cli": "^7.23.4",
     "@babel/core": "^7.23.3",
     "@babel/plugin-proposal-object-rest-spread": "^7.20.7",
     "@babel/preset-env": "^7.23.3",
     "@bevry/update-contributors": "^1.23.0",
-    "assert-helpers": "^11.4.0",
-    "eslint": "^8.53.0",
-    "eslint-config-bevry": "^4.0.0",
+    "assert-helpers": "^11.5.0",
+    "eslint": "^8.54.0",
+    "eslint-config-bevry": "^5.1.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.1",
-    "kava": "^7.2.0",
+    "kava": "^7.3.0",
     "prettier": "^3.1.0",
-    "projectz": "^3.1.0",
-    "valid-directory": "^4.2.0"
+    "projectz": "^3.3.0",
+    "valid-directory": "^4.4.0"
   },
   "scripts": {
     "our:clean": "rm -rf ./docs ./edition* ./es2015 ./es5 ./out ./.next",
