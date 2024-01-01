@@ -1,5 +1,21 @@
 # History
 
+## v8.0.0 2024 January 1
+
+-   Rewritten nearly everything, with the modern API at the `scanDirectory` export, and a compatibility layer for the old API at the default export
+-   Uses an extremely performant builtin solution, that can read 7000 files in 100ms (note that outputting the relative paths to stdout takes 150ms, and outputting it all as JSON to stdout takes 2 seconds)
+-   Uses promises
+    -   The compatibility layer supports the `next` callback in addition to promises
+-   Returns a recursive result result map
+    -   The compatibility layer provides a conversion to list and tree for the `next` callback if it detects the old format is desired
+-   Actions now accept a result object instead of individual arguments
+    -   The compatibility layer provides a conversion to arguments if it detects the old format is desired
+-   `readFile` option is now `encoding`, as such `readFile: true` is now `encoding: "utf8"`, and `readFile: "binary"` is now `encoding: "binary"`
+    -   The compatibility layer does not handle this conversion, you have to do it yourself
+-   Upgraded to support [ignorefs v5](https://github.com/bevry/ignorefs/blob/master/HISTORY.md#v500-2024-january-2) which maintains compatibility while supporting so much more
+-   Updated dependencies, [base files](https://github.com/bevry/base), and [editions](https://editions.bevry.me) using [boundation](https://github.com/bevry/boundation)
+-   Thank you to the sponsors: [Andrew Nesbitt](https://nesbitt.io), [Balsa](https://balsa.com), [Codecov](https://codecov.io), [Poonacha Medappa](https://poonachamedappa.com), [Rob Morris](https://github.com/Rob-Morris), [Sentry](https://sentry.io), [Syntax](https://syntax.fm)
+
 ## v7.3.0 2023 November 25
 
 -   Updated dependencies, [base files](https://github.com/bevry/base), and [editions](https://editions.bevry.me) using [boundation](https://github.com/bevry/boundation)
