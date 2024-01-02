@@ -1,6 +1,6 @@
 {
   "name": "scandirectory",
-  "version": "8.0.0",
+  "version": "8.1.0",
   "license": "Artistic-2.0",
   "description": "Scan a directory recursively with a lot of control and power",
   "homepage": "https://github.com/bevry/scandirectory",
@@ -13,6 +13,10 @@
     "url": "https://github.com/bevry/scandirectory/issues"
   },
   "keywords": [
+    "deno",
+    "deno-edition",
+    "deno-entry",
+    "denoland",
     "es2015",
     "es2017",
     "es2022",
@@ -80,13 +84,13 @@
   "contributors": [
     "Benjamin Lupton <b@lupton.cc> (https://balupton.com) (https://github.com/balupton)",
     "Bohdan (https://github.com/bohdanly)",
-    "Bohdan Lysenko <lysenkobv@gmail.com> (https://github.com/lysenkobv)",
     "Sean Fridman <mail@seanfridman.com> (https://seanfridman.com) (https://github.com/sfrdmn)"
   ],
   "sponsors": [
     "Andrew Nesbitt (https://nesbitt.io) (https://github.com/andrew): Software engineer and researcher",
     "Balsa <hello@balsa.com> (https://balsa.com) (https://github.com/balsa): We're Balsa, and we're building tools for builders.",
     "Codecov <hello-codecov@sentry.io> (https://codecov.io) (https://github.com/codecov): Empower developers with tools to improve code quality and testing.",
+    "Frontend Masters <support@frontendmasters.com> (https://FrontendMasters.com) (https://github.com/FrontendMasters) (https://thanks.dev/d/gh/FrontendMasters): The training platform for web app engineering skills – from front-end to full-stack! 🚀",
     "Poonacha Medappa (https://poonachamedappa.com) (https://github.com/km-Poonacha)",
     "Rob Morris <rob@prismatik.com.au> (https://github.com/Rob-Morris)",
     "Sentry (https://sentry.io) (https://github.com/getsentry): Real-time crash reporting for your web apps, mobile apps, and games.",
@@ -101,6 +105,7 @@
     "dr.dimitru (https://veliovgroup.com) (https://github.com/dr-dimitru)",
     "Elliott Ditman (https://elliottditman.com) (https://github.com/elliottditman)",
     "entroniq (https://gitlab.com/entroniq) (https://thanks.dev/d/gl/entroniq)",
+    "Frontend Masters <support@frontendmasters.com> (https://FrontendMasters.com) (https://github.com/FrontendMasters) (https://thanks.dev/d/gh/FrontendMasters)",
     "GitHub (https://github.com/about) (https://github.com/github)",
     "Hunter Beast (https://cryptoquick.com) (https://github.com/cryptoquick)",
     "Jean-Luc Geering (https://github.com/jlgeering) (https://opencollective.com/jlgeering) (https://twitter.com/jlgeering)",
@@ -219,6 +224,20 @@
         "import"
       ],
       "engines": false
+    },
+    {
+      "description": "TypeScript source code made to be compatible with Deno",
+      "directory": "edition-deno",
+      "entry": "index.ts",
+      "tags": [
+        "typescript",
+        "import",
+        "deno"
+      ],
+      "engines": {
+        "deno": true,
+        "browsers": false
+      }
     }
   ],
   "bin": "bin.cjs",
@@ -233,6 +252,7 @@
       "require": "./edition-es2022/index.js"
     }
   },
+  "deno": "edition-deno/index.ts",
   "dependencies": {
     "editions": "^6.21.0",
     "ignorefs": "^5.0.4"
@@ -243,11 +263,12 @@
     "@typescript-eslint/parser": "^6.17.0",
     "assert-helpers": "^11.12.0",
     "eslint": "^8.56.0",
-    "eslint-config-bevry": "^5.4.0",
+    "eslint-config-bevry": "^5.5.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.1.2",
     "filedirname": "^3.4.0",
-    "kava": "^7.8.0",
+    "kava": "^7.9.0",
+    "make-deno-edition": "^2.3.0",
     "prettier": "^3.1.1",
     "projectz": "^4.2.0",
     "typedoc": "^0.25.6",
@@ -257,7 +278,8 @@
   "scripts": {
     "our:bin": "node ./bin.cjs",
     "our:clean": "rm -rf ./docs ./edition* ./es2015 ./es5 ./out ./.next",
-    "our:compile": "npm run our:compile:edition-es2015 && npm run our:compile:edition-es2017 && npm run our:compile:edition-es2017-esm && npm run our:compile:edition-es2022 && npm run our:compile:edition-es5 && npm run our:compile:edition-types",
+    "our:compile": "npm run our:compile:deno && npm run our:compile:edition-es2015 && npm run our:compile:edition-es2017 && npm run our:compile:edition-es2017-esm && npm run our:compile:edition-es2022 && npm run our:compile:edition-es5 && npm run our:compile:edition-types",
+    "our:compile:deno": "make-deno-edition --attempt",
     "our:compile:edition-es2015": "tsc --module commonjs --target ES2015 --outDir ./edition-es2015 --project tsconfig.json && ( test ! -d edition-es2015/source || ( mv edition-es2015/source edition-temp && rm -rf edition-es2015 && mv edition-temp edition-es2015 ) ) && printf '%s' '{\"type\": \"commonjs\"}' > edition-es2015/package.json",
     "our:compile:edition-es2017": "tsc --module commonjs --target ES2017 --outDir ./edition-es2017 --project tsconfig.json && ( test ! -d edition-es2017/source || ( mv edition-es2017/source edition-temp && rm -rf edition-es2017 && mv edition-temp edition-es2017 ) ) && printf '%s' '{\"type\": \"commonjs\"}' > edition-es2017/package.json",
     "our:compile:edition-es2017-esm": "tsc --module ESNext --target ES2017 --outDir ./edition-es2017-esm --project tsconfig.json && ( test ! -d edition-es2017-esm/source || ( mv edition-es2017-esm/source edition-temp && rm -rf edition-es2017-esm && mv edition-temp edition-es2017-esm ) ) && printf '%s' '{\"type\": \"module\"}' > edition-es2017-esm/package.json",
