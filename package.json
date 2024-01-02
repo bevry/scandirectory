@@ -1,6 +1,6 @@
 {
   "name": "scandirectory",
-  "version": "8.1.0",
+  "version": "8.1.1",
   "license": "Artistic-2.0",
   "description": "Scan a directory recursively with a lot of control and power",
   "homepage": "https://github.com/bevry/scandirectory",

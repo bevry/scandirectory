@@ -470,7 +470,7 @@ export default async function scanDirectoryCompatibility<
 }
 
 /** Compatibility helper for {@link scanDirectoryCompatibility} to generate results compatible with {@link CompatibilityNextCallback} */
-function toList<Encoding extends ResultEncoding = undefined>(
+export function toList<Encoding extends ResultEncoding = undefined>(
 	results: Results<Encoding>
 ): List<Encoding> {
 	const list: List<Encoding> = {}
@@ -484,7 +484,7 @@ function toList<Encoding extends ResultEncoding = undefined>(
 }
 
 /** Compatibility helper for {@link scanDirectoryCompatibility} to generate results compatible with {@link CompatibilityNextCallback} */
-function toTree<Encoding extends ResultEncoding = undefined>(
+export function toTree<Encoding extends ResultEncoding = undefined>(
 	results: Results<Encoding> | null,
 	descending: boolean = false
 ): Tree<Encoding> {
